@@ -13,6 +13,12 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
 
   rabbitmq:
    image: cyrilix/rabbitmq-mqtt

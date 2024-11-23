@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RabbitMQWebApp.DBModel
 {
-    [Table("SENSORMESSAGE")]
+    [Table("SENSORMESSAGE", Schema = "dbo")]
     public class SensorMessageDBModel
     {
         [Key]

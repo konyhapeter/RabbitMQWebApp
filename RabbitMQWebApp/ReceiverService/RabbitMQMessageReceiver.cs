@@ -3,7 +3,9 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQWebApp.Config;
+using RabbitMQWebApp.DBModel;
 using RabbitMQWebApp.SensorMessage;
+using System.Diagnostics;
 using System.Text;
 
 namespace RabbitMQWebApp.ReceiverService
@@ -47,10 +49,20 @@ namespace RabbitMQWebApp.ReceiverService
                 var messageAsString = Encoding.UTF8.GetString(body);
                 Console.WriteLine($"[x] Received: {messageAsString}");
 
-                SensorMessageHolder message = new SensorMessageHolder {MESSAGE = messageAsString};
+                SensorMessageDBModel message = new SensorMessageDBModel { MESSAGE = messageAsString };
 
-                _sensorMessageContext.SensorMessages.Add(message);  
-                _sensorMessageContext.SaveChanges();
+                Console.WriteLine("Get into try");
+                try
+                {
+                    _sensorMessageContext.SensorMessages.Add(message);
+                    _sensorMessageContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception message:" + ex.Message);
+                    Console.WriteLine("Inner Exception message:" + ex.InnerException.Message);
+                }
+
             };
             await _channel.BasicConsumeAsync(queue: _rabbitMQConfig.QueueName,
                    autoAck: true,
