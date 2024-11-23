@@ -1,0 +1,50 @@
+version: '3.8'
+
+volumes:
+  sqlserver_data:
+
+services:
+  rabbitmqwebapp:
+    image: 'mqtt-entity-app:latest'
+    container_name: 'mqtt-entity-app'
+    build:
+      context: .
+      dockerfile: RabbitMQWebApp/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    restart: on-failure
+
+  rabbitmq:
+   image: cyrilix/rabbitmq-mqtt
+   hostname: rabbitmq
+   ports:
+     - "1884:1883"     # MQTT port
+     - "5672:5672"     # JMS Port
+     - "15672:15672"   # Management Port - default user:pass = guest:guest
+   container_name: 'rabbit-with-mqtt-NET'
+   healthcheck:
+     test: ["CMD", "nc", "-z", "rabbitmq", "5672"]
+     interval: 10s
+     timeout: 5s
+     retries: 5
+     start_period: 30s
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    hostname: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${Sa_Password:-password123}
+      - MSSQL_PID=Developer
+    ports:
+      - 1433:1433
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${Sa_Password:-password123} -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
