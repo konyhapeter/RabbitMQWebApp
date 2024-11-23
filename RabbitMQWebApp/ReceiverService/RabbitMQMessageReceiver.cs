@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQWebApp.Config;
+using RabbitMQWebApp.SensorMessage;
 using System.Text;
 
 namespace RabbitMQWebApp.ReceiverService
@@ -10,12 +12,14 @@ namespace RabbitMQWebApp.ReceiverService
     {
 
         private readonly RabbitMQConfig _rabbitMQConfig;
+        private readonly SensorMessageContext _sensorMessageContext;
 
         //mosquitto_pub -h localhost -p 1884 -P guest -u guest -t mqtt_topic -m "Hello, RabbitMQ!"
 
-        public RabbitMQMessageReceiver(IOptions<RabbitMQConfig> rabbitMQConfig)
+        public RabbitMQMessageReceiver(IOptions<RabbitMQConfig> rabbitMQConfig, IOptions<SensorMessageContext> sensorMessageContext)
         {
             _rabbitMQConfig = rabbitMQConfig.Value;
+            _sensorMessageContext = sensorMessageContext.Value;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -40,8 +44,13 @@ namespace RabbitMQWebApp.ReceiverService
             consumer.ReceivedAsync += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"[x] Received: {message}");
+                var messageAsString = Encoding.UTF8.GetString(body);
+                Console.WriteLine($"[x] Received: {messageAsString}");
+
+                SensorMessageHolder message = new SensorMessageHolder {MESSAGE = messageAsString};
+
+                _sensorMessageContext.SensorMessages.Add(message);  
+                _sensorMessageContext.SaveChanges();
             };
             await _channel.BasicConsumeAsync(queue: _rabbitMQConfig.QueueName,
                    autoAck: true,

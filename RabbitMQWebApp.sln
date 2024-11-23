@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQWebApp", "RabbitMQWebApp\RabbitMQWebApp.csproj", "{8D8F5C13-0C45-4E96-8C26-05CC2135BBEF}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9621C2B8-9643-4ACA-93D3-E51F8F054CCA}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FBD6EE73-9F71-4BD0-92C6-6A411E99E8BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{8D8F5C13-0C45-4E96-8C26-05CC2135BBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D8F5C13-0C45-4E96-8C26-05CC2135BBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D8F5C13-0C45-4E96-8C26-05CC2135BBEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9621C2B8-9643-4ACA-93D3-E51F8F054CCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9621C2B8-9643-4ACA-93D3-E51F8F054CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9621C2B8-9643-4ACA-93D3-E51F8F054CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9621C2B8-9643-4ACA-93D3-E51F8F054CCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBD6EE73-9F71-4BD0-92C6-6A411E99E8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBD6EE73-9F71-4BD0-92C6-6A411E99E8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBD6EE73-9F71-4BD0-92C6-6A411E99E8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBD6EE73-9F71-4BD0-92C6-6A411E99E8BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
