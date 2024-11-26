@@ -45,6 +45,7 @@ namespace RabbitMQWebApp.ReceiverService
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += async (model, ea) =>
             {
+                //TODO: need to working on encoding
                 var body = ea.Body.ToArray();
                 var messageAsString = Encoding.UTF8.GetString(body);
                 Console.WriteLine($"[x] Received: {messageAsString}");
