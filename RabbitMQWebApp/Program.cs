@@ -1,11 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using RabbitMQWebApp.Config;
+using RabbitMQWebApp.Mapper;
 using RabbitMQWebApp.ReceiverService;
-using RabbitMQWebApp.SensorMessage;
+using RabbitMQWebApp.SensorMessageDao;
 using RabbitMQWebApp.SensorMessageMigrations;
+using RabbitMQWebApp.SensorMessageService;
+using RabbitMQWebApp.SensorMessageService.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.Configure<RabbitMQConfig>(builder.Configuration.GetSection("RabbitMQConfig"));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -13,6 +20,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<SensorMessageContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddHostedService<RabbitMQMessageReceiver>();
+
+builder.Services.AddScoped<ISensorMessageService, SensorMessageService>();
+builder.Services.AddScoped<ISensorMessageModelMapper, SensorMessageModelMapper>();
+//builder.Services.AddScoped<SensorMessageController>();
 
 builder.Services.AddScoped<SensorMessageMigrator>();
 
@@ -23,4 +34,6 @@ SensorMessageContext sensorMessageContext = scope.ServiceProvider.GetRequiredSer
 
 sensorMessageContext.Database.EnsureCreated();
 
+app.UseRouting();
+app.MapControllers();
 app.Run();
