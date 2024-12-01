@@ -7,7 +7,7 @@ namespace RabbitMQWebApp.Mapper
     {
         public SensorMessage entityToApi(SensorMessageDBModel pSensorMessage)
         {
-            SensorMessage message= new SensorMessage(pSensorMessage.MESSAGE);
+            SensorMessage message= new SensorMessage(pSensorMessage.MESSAGE, pSensorMessage.ID);
             return message;
         }
     }

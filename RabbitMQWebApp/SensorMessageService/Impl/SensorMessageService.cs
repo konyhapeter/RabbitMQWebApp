@@ -13,7 +13,9 @@ namespace RabbitMQWebApp.SensorMessageService.Impl
             
             logger.LogInformation("returned messages: {messages.Count}", messages.Count);
             
-            List<SensorMessage>? copiedList = messages.Select(message => new SensorMessage(message.MESSAGE)).ToList();
+            
+            List<SensorMessage>? copiedList = messages.Select(message => new SensorMessage(message.MESSAGE, message.ID)).ToList();
+            
             
             logger.LogInformation("copied messages: {copiedList}", copiedList);
             return copiedList;

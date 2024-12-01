@@ -1,10 +1,13 @@
 ﻿namespace RabbitMQWebApp.Web.Rest.Model
 {
-    public record SensorMessage(string message)
+    public class SensorMessage()
     {
-        public static SensorMessage From(string message)
+        public string Message { get; set; }
+        public int Id { get; set; } 
+        public SensorMessage(string value, int id) : this()
         {
-            return new SensorMessage(message);
+            Message = value;
+            Id = id;
         }
     }
 }

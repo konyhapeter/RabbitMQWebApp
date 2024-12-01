@@ -14,12 +14,12 @@ namespace RabbitMQWebApp.Web.Rest
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<SensorMessageReply>> GetSensorMessages()
         {
-            SensorMessageReply reply = new SensorMessageReply(await sensorMessageService.GetAllSensorMessages());
+            SensorMessageReply reply = new SensorMessageReply();
+            reply.Messages = await sensorMessageService.GetAllSensorMessages();
             if (reply.Messages.Count == 0){
-                return Ok(reply);
+                return Empty;
             }
             logger.LogInformation("reply: size {size}", reply.Messages.Count);
-            reply.Messages.ForEach(message => logger.LogInformation("message from db: {message}", message.message));
             return Ok(reply);
         }
     }

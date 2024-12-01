@@ -23,8 +23,8 @@ builder.Services.AddHostedService<RabbitMQMessageReceiver>();
 
 builder.Services.AddScoped<ISensorMessageService, SensorMessageService>();
 builder.Services.AddScoped<ISensorMessageModelMapper, SensorMessageModelMapper>();
-//builder.Services.AddScoped<SensorMessageController>();
 
+builder.Services.AddControllers();
 builder.Services.AddScoped<SensorMessageMigrator>();
 
 var app = builder.Build();
