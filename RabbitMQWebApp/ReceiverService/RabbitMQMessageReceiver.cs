@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQWebApp.Config;
+using RabbitMQWebApp.SensorMessageDao;
 using RabbitMQWebApp.DBModel;
-using RabbitMQWebApp.SensorMessage;
-using System.Diagnostics;
 using System.Text;
 
 namespace RabbitMQWebApp.ReceiverService

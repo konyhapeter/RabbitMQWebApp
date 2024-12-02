@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RabbitMQWebApp.DBModel;
 
-namespace RabbitMQWebApp.SensorMessage
+namespace RabbitMQWebApp.SensorMessageDao
 {
     public class SensorMessageContext : DbContext
     {
